@@ -1,0 +1,41 @@
+﻿<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Upload License</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#upload').on('click', function () {
+                var file_data = $('#file').prop('files')[0];
+                var form_data = new FormData();
+                form_data.append('file', file_data);
+
+                ////////////////////// Code logic below is implemented on Android
+                $.ajax({
+                    url: 'http://localhost:56494/api/License/ParseLicense',
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    type: 'post',
+                    success: function (response) {
+                        $('#msg').html(response);
+                    },
+                    error: function (response) {
+                        $('#msg').html(response);
+                    }
+                });
+                /////////////////////// end of Android part
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <p id="msg"></p>
+
+    <input type="file" id="file" name="file" multiple />
+    <button id="upload">Upload</button>
+</body>
+</html>
